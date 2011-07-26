@@ -1,4 +1,7 @@
 blockdiag
+seqdiag
+nwdiag
+actdiag
 Flask
 flup
 blockdiagcontrib-cisco
