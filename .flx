@@ -3,5 +3,4 @@ public_html/dispatch.fcgi FLX_PROJECT_NAME PROJECT_NAME
 
 
 [deploy]                                                                        
-#pip install -r req.txt -I --install-option="--user"
 pip install -r req.txt -I
