@@ -1,11 +1,9 @@
 #!/usr/bin/env python
 import sys
-sys.path.insert(0, "/home/FLX_PROJECT_NAME/lib/")
+sys.path.insert(0, '/home/FLX_PROJECT_NAME/app')
 
-def myapp(environ, start_response):
-    start_response('200 OK', [('Content-Type', 'text/plain')])
-    return ['Hello World!\n']
+from flup.server.fcgi import WSGIServer
+from app import app
 
 if __name__ == '__main__':
-    from fcgi import WSGIServer
-    WSGIServer(myapp).run()
+    WSGIServer(app).run()
