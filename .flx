@@ -1,8 +1,4 @@
 [replace]
-app/settings.py FLX_DB_NAME PROJECT_NAME
-app/settings.py FLX_DB_USER DB_USER
-app/settings.py FLX_DB_PASS DB_PASSWORD
-app/settings.py FLX_DB_HOST DB_HOST
 public_html/dispatch.fcgi FLX_PROJECT_NAME PROJECT_NAME
 
 [deploy]
