@@ -1,1 +1,12 @@
-All files under public_html directory are published with Apache.
+This is a Interactive shell for blockdiag. This web application is
+originally written by tk0miya (http://twitter.com/#!/tk0miya),
+http://blockdiag.appspot.com.
+
+This Fluxflux port is written by shirou (r_rudi). The difference from
+the original is 
+
+- Download diagram as a png
+
+
+
+
