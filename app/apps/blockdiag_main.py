@@ -36,7 +36,7 @@ def blockdiag_image():
     if encoding == 'base64':
         source = base64_decode(source)
 
-    image = blockdiag_generate_image(source)
+    image = blockdiag_generate_image(source, format="SVG")
     if encoding == 'jsonp':
         callback = request.args.get('callback')
         if callback:
@@ -57,25 +57,37 @@ def blockdiag_image():
     return response
 
 
-def blockdiag_generate_image(source):
+def blockdiag_generate_image(source, format="SVG"):
     from blockdiag import diagparser, builder, DiagramDraw
     from blockdiag.elements import DiagramNode, DiagramEdge, NodeGroup
 
     try:
         tree = diagparser.parse_string(source)
         diagram = builder.ScreenNodeBuilder.build(tree)
-        draw = DiagramDraw.DiagramDraw('SVG', diagram)
+        if format == 'SVG':
+            draw = DiagramDraw.DiagramDraw('SVG', diagram)
+        elif format == 'PNG':
+            draw = DiagramDraw.DiagramDraw('PNG', diagram)
+        else:
+            raise Exception, 'unknown format:' + format
+
         draw.draw()
 
-        svg = draw.save('').decode('utf-8')
+        if format == 'SVG':
+            result = draw.save('').decode('utf-8')
+        elif format == 'PNG':
+            import StringIO
+            s = StringIO.StringIO()
+            draw.save(s)
+            result = s.getvalue()
         etype = None
         error = None
     except Exception, e:
-        svg = ''
+        result = ''
         etype = e.__class__.__name__
         error = str(e)
 
-    return dict(image=svg, etype=etype, error=error)
+    return dict(image=result, etype=etype, error=error)
 
 
 @app.route('/upload/', methods=['GET', 'POST'])
@@ -104,6 +116,23 @@ def blockdiag_upload_form():
         response = make_response(body)
         response.headers['Content-Type'] = 'application/xhtml+xml'
         return response
+
+
+@app.route('/generate', methods=['GET', 'POST'])
+def blockdiag_generate():
+    if request.method == 'POST':
+        source = request.form['src']
+    else:
+        source = request.args.get('src')
+    #    encoding = request.args.get('encoding')
+
+    source = base64_decode(source)
+
+    image = blockdiag_generate_image(source, format="PNG")
+    response = make_response(image['image'])
+    response.headers['Content-Type'] = 'image/png'
+
+    return response
 
 
 def blockdiag_generate_image_from_uploads(file):

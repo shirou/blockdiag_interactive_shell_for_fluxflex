@@ -9,6 +9,7 @@ function update_diagram() {
   encoded_diagram = Base64.encodeURI(diagram)
   url = './?src=' + encoded_diagram
   $('#shorten_url a').attr('href', url)
+  $('#download_url a').attr('href', '/generate?src='+encoded_diagram)
 
   url = './image';
   params = {'encoding': 'jsonp', 'src': diagram};
