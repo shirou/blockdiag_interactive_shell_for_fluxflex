@@ -92,13 +92,17 @@ def blockdiag_generate_image(source, format="SVG"):
     except Exception, e:
         result = ''
         etype = e.__class__.__name__
+        import traceback
+        f = open('/home/FLX_PROJECT_NAME/public_html/log.txt', 'w')
+        f.write(e)
+        f.write("---\n")
+        f.write(etype)
+        f.write("---\n")
+        traceback.print_exc(file=f)
+        f.close()
+
         print e, etype
         error = str(e)
-
-    import sys
-    print "This is print"
-    sys.stdout.write("This is stdout.write")
-    sys.stderr.write("This is stdout.write")
     
 
     return dict(image=result, etype=etype, error=error)
