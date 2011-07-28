@@ -95,6 +95,12 @@ def blockdiag_generate_image(source, format="SVG"):
         print e, etype
         error = str(e)
 
+    import sys
+    print "This is print"
+    sys.stdout.write("This is stdout.write")
+    sys.stderr.write("This is stdout.write")
+    
+
     return dict(image=result, etype=etype, error=error)
 
 
