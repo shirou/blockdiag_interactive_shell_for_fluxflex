@@ -1,5 +1,6 @@
 [replace]
-public_html/dispatch.fcgi FLX_PROJECT_NAME PROJECT_NAME
+public_html/dispatch.fcgi  FLX_PROJECT_NAME PROJECT_NAME
+app/apps/blockdiag_main.py FLX_PROJECT_NAME PROJECT_NAME
 
 [deploy]
 pip install -r req.txt -I --install-option="--user"

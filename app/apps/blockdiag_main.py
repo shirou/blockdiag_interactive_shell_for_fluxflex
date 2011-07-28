@@ -64,10 +64,16 @@ def blockdiag_generate_image(source, format="SVG"):
     try:
         tree = diagparser.parse_string(source)
         diagram = builder.ScreenNodeBuilder.build(tree)
+        fontpath = '/home/FLX_PROJECT_NAME/ipafont/ipaexg.ttf'
+        
         if format == 'SVG':
-            draw = DiagramDraw.DiagramDraw('SVG', diagram)
+            draw = DiagramDraw.DiagramDraw('SVG',
+                                           diagram,
+                                           font=fontpath)
         elif format == 'PNG':
-            draw = DiagramDraw.DiagramDraw('PNG', diagram)
+            draw = DiagramDraw.DiagramDraw('PNG',
+                                           diagram,
+                                           font=fontpath)
         else:
             raise Exception, 'unknown format:' + format
 
@@ -75,6 +81,7 @@ def blockdiag_generate_image(source, format="SVG"):
 
         if format == 'SVG':
             result = draw.save('').decode('utf-8')
+            print result
         elif format == 'PNG':
             import StringIO
             s = StringIO.StringIO()
@@ -85,6 +92,7 @@ def blockdiag_generate_image(source, format="SVG"):
     except Exception, e:
         result = ''
         etype = e.__class__.__name__
+        print e, etype
         error = str(e)
 
     return dict(image=result, etype=etype, error=error)
