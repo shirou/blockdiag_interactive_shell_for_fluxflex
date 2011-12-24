@@ -1,3 +1,4 @@
+PIL
 blockdiag
 seqdiag
 nwdiag
